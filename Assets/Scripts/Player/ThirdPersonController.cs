@@ -7,6 +7,7 @@ public class ThirdPersonController : MonoBehaviour
 {
     [Header("Inputs")]
     [SerializeField] private InputActionReference moveAction;
+    [SerializeField] private InputActionReference lookAction;
     
     [Header("Player Transform")]
     [SerializeField] private Transform playerTransform;
@@ -21,10 +22,8 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float turnAcceleration = 600f;
     [SerializeField] private float turnDeceleration = 400f;
     
-    [Header("Cinemachine Camera Settings")]
-    [SerializeField] private Transform cameraTarget;
-    [SerializeField] private float cameraFollowSpeed = 15f;
-    [SerializeField] private float cameraTurnSpeed = 700f;
+   // [Header("Camera Settings")]
+    
 
     [Header("Gravity")] 
     [Tooltip("MUST be a positive value")] [SerializeField] private float gravity = 20f;
@@ -40,6 +39,14 @@ public class ThirdPersonController : MonoBehaviour
     
     #endregion
 
+    #region Variable Setup - Camera
+
+    private float yawOffset = 0f;
+    private float pitchOffset = 20f;
+    private Vector3 cameraVelocityRef;
+    
+    #endregion
+    
     #region Variable Setup - States
 
     private bool canMove = true;
@@ -62,12 +69,7 @@ public class ThirdPersonController : MonoBehaviour
             Debug.LogError("[Player] Error: CharacterController not found");
             return;
         }
-
-        if (cameraTarget == null)
-        {
-            Debug.LogError("[Player] Error: CameraTarget not found");
-            return;
-        }
+        
         
         // Cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -76,19 +78,15 @@ public class ThirdPersonController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (moveAction != null && moveAction.action != null)
-        {
-            moveAction.action.Enable();
-        }
+        moveAction?.action.Enable();
+        lookAction?.action.Enable();
     }
 
 
     private void OnDisable()
     {
-        if (moveAction != null && moveAction.action != null)
-        {
-            moveAction.action.Disable();
-        }
+        moveAction.action.Disable();
+        lookAction.action.Disable();
     }
 
     #endregion
@@ -130,12 +128,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         HandleGroundCheck();
 
-        Vector2 moveInput = Vector2.zero;
-        if (moveAction != null && moveAction.action != null)
-        {
-            moveInput = moveAction.action.ReadValue<Vector2>();
-        }
-
+        Vector2 moveInput = moveAction != null ? moveAction.action.ReadValue<Vector2>() : Vector2.zero;
         float turnInput = moveInput.x;
         float throttleInput = moveInput.y;
         
@@ -190,18 +183,7 @@ public class ThirdPersonController : MonoBehaviour
 
     private void HandleCamera()
     {
-        if (cameraTarget == null) return;
-
-        // Follow Chair
-        Vector3 targetPosition = playerTransform.position + (Vector3.up * 1.5f);
-        cameraTarget.position = Vector3.Lerp(cameraTarget.position, targetPosition, cameraFollowSpeed * Time.deltaTime);
-        
-        // Rotation
-        Vector3 horizontalVel = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
-        Vector3 targetLookDir = horizontalVel.magnitude > 1.5f ? horizontalVel.normalized : playerTransform.forward;
-        
-        Quaternion targetRotation = Quaternion.LookRotation(targetLookDir);
-        cameraTarget.rotation = Quaternion.RotateTowards(cameraTarget.rotation, targetRotation, cameraTurnSpeed * Time.deltaTime);
+       
     }
 
     #endregion
