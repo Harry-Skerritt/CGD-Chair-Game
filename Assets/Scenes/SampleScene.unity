@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineThirdPersonFollow
   Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 0, y: 6.3, z: -3}
+  ShoulderOffset: {x: 0, y: 6.5, z: -4}
   VerticalArmLength: 0
   CameraSide: 1
   CameraDistance: 4
@@ -235,7 +235,7 @@ Transform:
   m_GameObject: {fileID: 188984092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.3, z: -7}
+  m_LocalPosition: {x: 0, y: 6.5, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -409,11 +409,11 @@ MonoBehaviour:
   turnAcceleration: 600
   turnDeceleration: 400
   cameraFollowTarget: {fileID: 0}
-  cameraLagTime: 0.25
+  cameraLagTime: 0.15
   cameraStartRotation: {x: 20, y: 0, z: 0}
-  upLimit: 40
-  downLimit: 0
-  pitchSpeed: 15
+  upLimit: 50
+  downLimit: -10
+  pitchSpeed: 100
   cameraAutoReturns: 0
   returnToStartDelay: 0.5
   returnToStartSpeed: 15
@@ -597,7 +597,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.8, z: -7}
+  m_LocalPosition: {x: 0, y: 6, z: -8}
   m_LocalScale: {x: 1, y: 0.87499994, z: 1.2500002}
   m_ConstrainProportionsScale: 0
   m_Children: []
